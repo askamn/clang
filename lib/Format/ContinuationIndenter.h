@@ -271,6 +271,13 @@ struct ParenState {
   /// was a newline after the beginning left brace.
   bool BreakBeforeClosingBrace : 1;
 
+  /// Whether a newline needs to be inserted before the block's closing
+  /// paren.
+  ///
+  /// We only want to insert a newline before the closing paren if there also
+  /// was a newline after the beginning left paren.
+  bool BreakBeforeClosingParen : 1;
+
   /// Avoid bin packing, i.e. multiple parameters/elements on multiple
   /// lines, in this context.
   bool AvoidBinPacking : 1;
@@ -340,6 +347,8 @@ struct ParenState {
       return FirstLessLess < Other.FirstLessLess;
     if (BreakBeforeClosingBrace != Other.BreakBeforeClosingBrace)
       return BreakBeforeClosingBrace;
+    if (BreakBeforeClosingParen != Other.BreakBeforeClosingParen)
+      return BreakBeforeClosingParen;
     if (QuestionColumn != Other.QuestionColumn)
       return QuestionColumn < Other.QuestionColumn;
     if (AvoidBinPacking != Other.AvoidBinPacking)
